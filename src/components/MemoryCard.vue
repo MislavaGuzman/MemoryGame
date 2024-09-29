@@ -1,22 +1,16 @@
 <template>
-  <q-card
-    @click="flip"
-    :class="{
-      'flipped': card?.flipped,
-      'selected': isSelected,
-      'matched': card?.matched
-    }"
-    class="card"
-  >
-    <q-card-section class="card-content" >
-      <div v-if="card?.flipped || card?.matched" class="v-ripple.early">
-        <!-- Aseguramos que la imagen ocupe el 100% del contenedor -->
+  <div class="q-gutter-sm row items-start card" @click="flip"
+  :class="{ flipped: card?.flipped || card?.matched }">
 
-        <img :src="getImageSrc(card.value)" class="v-ripple.early" />
-      </div>
-      <div v-else class="card-text">?</div>
-    </q-card-section>
-  </q-card>
+    <div v-if="card?.flipped || card?.matched" class="card-content">
+      <q-img
+        :src="getImageSrc(card.value)"
+        spinner-color="white"
+        style="height: 160px; max-width: 170px"
+      />
+    </div>
+    <div v-else class="card-text">?</div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -35,6 +29,7 @@ export default defineComponent({
 
     const flip = () => {
       if (props.card && !props.card.matched && !props.card.flipped) {
+
         emit('flip');
         isSelected.value = !isSelected.value;
       }
@@ -56,13 +51,21 @@ export default defineComponent({
   height: 120px;
   display: flex;
   justify-content: center;
-  align-items: center;
   background: linear-gradient(145deg, #79f281, #ff7bb2);
   border-radius: 15px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
   position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.6s, background-color 0.6s, opacity 0.6s;
+  transform-style: preserve-3d;
+
+}
+
+.card.flipped {
+  animation: flipCard 0.6s forwards;
+  background: none;
+   /* El fondo desaparece cuando la tarjeta se voltea */
 }
 
 .card-content {
@@ -71,21 +74,25 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
 }
 
-/* Estilo para la imagen */
-.card-img {
-  width: 100%;  /* Asegura que la imagen ocupe el 100% del ancho */
-  height: 100%; /* Asegura que la imagen ocupe el 100% del alto */
-  object-fit: cover; /* La imagen cubre todo el espacio, aunque recorte partes */
-  transform: rotateY(0deg); /* Asegura que la imagen no se voltee */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
-/* Estado cuando la tarjeta está volteada */
-.card.flipped {
-  background: linear-gradient(145deg, #2e38ff, #ff7bb2);
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.4);
-  transform: rotateY(180deg); /* Aplica animación de rotación cuando se voltea */
+.card-text {
+  font-size: 2rem;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 /* Efecto de hover */
@@ -97,13 +104,21 @@ export default defineComponent({
 /* Animación cuando la tarjeta se voltea */
 @keyframes flipCard {
   0% {
+    transform: rotateY(100deg);
+
+  }
+  50% {
     transform: rotateY(0deg);
+
   }
   100% {
-    transform: rotateY(180deg);
+    transform: rotateY(0deg);
+
   }
 }
 
-
-
+.card.flipped {
+  animation: flipCard 0.9s ease-in-out forwards;
+  /* Duración de 0.9s y suavizado con ease-in-out */
+}
 </style>

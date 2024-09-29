@@ -30,15 +30,15 @@ export default {
   <q-page-container>
     <q-page>
      <q-toolbar>
-      <q-toolbar-title class="text-primary">
+      <q-toolbar-title  class="bg-primary text-white">
         記憶ゲーム
       </q-toolbar-title>
      </q-toolbar>
 
 
-     <div class="q-pa-md">
-      <q-btn @click="selectMode('Hiragana')" label="ひらがな" class="full-width text-secondary" />
-      <q-btn @click="selectMode('Katakana')" label="カタカナ" class="full-width text-accent" />
+     <div class="q-pa-md q-gutter-sm">
+      <q-btn outline rounded color="secondary" @click="selectMode('Hiragana')" label="ひらがな" class="full-width text-secondary text-h5" />
+      <q-btn outline rounded color="accent" @click="selectMode('Katakana')" label="カタカナ" class="full-width text-accent text-h5" />
 
 
      </div>

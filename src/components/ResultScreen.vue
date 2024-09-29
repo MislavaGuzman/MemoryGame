@@ -1,14 +1,19 @@
 <template>
+   <q-layout view="1Hh Lpr 1Ff">
+    <q-page-container>
   <q-page>
     <q-toolbar>
-      <q-toolbar-title>Resultados</q-toolbar-title>
+      <q-toolbar-title text-h2 class="text-secondary">
+       Resultados
+      </q-toolbar-title>
     </q-toolbar>
     <div class="q-pa-md">
-      <p>Puntuación: {{ score }}</p>
-      <q-btn @click="restart" label="Volver a Jugar" />
-      <q-btn @click="shareScore" label="Compartir en Redes Sociales" />
+      <p text-h3 class="text-primary">Puntuación: {{ score }}</p>
+      <q-btn outline rounded color="info" @click="restart" label="Volver a Jugar" />
     </div>
   </q-page>
+    </q-page-container>
+    </q-layout>
 </template>
 
 <script lang="ts">
@@ -22,7 +27,7 @@ export default {
 
     const restart = () => {
       store.resetGame();
-      router.push('/');
+      router.push('/'); // Vuelve al inicio para reiniciar el juego
     };
 
     const shareScore = () => {
